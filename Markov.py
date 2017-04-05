@@ -19,6 +19,7 @@ class TransitionMatrix:
             prob_raw = open(init_path)
             prob_raw_data = prob_raw.read()
             self.matrix = json.loads(prob_raw_data)
+            self.normalize()
 
     def add_transition(self, prev_state, next_state):
         if prev_state in self.matrix.keys():
@@ -49,12 +50,26 @@ class TransitionMatrix:
         self.normalize()
         frequency_data = json.dumps(self.matrix)
         normalized_data = json.dumps(self.norm_matrix)
-        open(filepath + '.out', 'w').write(frequency_data)
-        open(filepath + '_norm.out', 'w').write(normalized_data)
+        open(filepath + '.mkv', 'w').write(frequency_data)
+        open(filepath + '_norm.mkv', 'w').write(normalized_data)
 
-    # Load multiple data files into one combined transition matrix
-    def load_data(self, file):
-        pass
+    # Add data from another existing matrix into the current object.
+    # Combines and sums the new data with the data in the structure
+    def load_data(self, filepath):
+        if os.path.isfile(filepath):
+            prob_raw = open(filepath)
+            prob_raw_data = prob_raw.read()
+            new_matrix = json.loads(prob_raw_data)
+            for key in new_matrix.keys():
+                if key in self.matrix:
+                    for transition in new_matrix[key].keys():
+                        if transition in self.matrix[key]:
+                            self.matrix[key][transition] += new_matrix[key][transition]
+                        else:
+                            self.matrix[key][transition] = new_matrix[key][transition]
+                else:
+                    self.matrix[key] = new_matrix[key]
+            self.normalize()
         
 
         
