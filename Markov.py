@@ -5,7 +5,8 @@
 # Markov Transition Matrix library.  Handles writing to disk, reading
 # in from disk and updating, normalizing, and creating/updating matrices.
 
-import sys, os, json
+import sys, os, json, random
+import copy
 
 class TransitionMatrix:
     
@@ -13,6 +14,8 @@ class TransitionMatrix:
         self.matrix = {}
         self.norm_matrix = None
         self.fname = init_name if init_name else 'data'
+        self.curr_state = None
+        self.choice_matrix = None
 
         # If there is an initial starting matrix, 
         # initialize probabilities based on this
@@ -78,7 +81,28 @@ class TransitionMatrix:
                 else:
                     self.matrix[key] = new_matrix[key]
             self.normalize()
+
+    def initialize_chain(self):
+        self.normalize()
+        self.curr_state = random.choice(list(self.matrix.keys()))
+        self.choice_matrix = copy.deepcopy(self.norm_matrix)
+        for key in self.choice_matrix:
+            acc = 0
+            for outcome in self.choice_matrix[key]:
+                acc += self.choice_matrix[key][outcome]
+                self.choice_matrix[key][outcome] = acc
+
+    def get_next_outcome(self):
+        rand = random.random()
+        if not self.curr_state in self.choice_matrix:
+            self.curr_state = random.choice(list(self.choice_matrix.keys()))
+        for key in self.choice_matrix[self.curr_state]:
+            if self.choice_matrix[self.curr_state][key] >= rand:
+                self.curr_state = key
+                return key
         
+        self.curr_state = random.choice(list(self.choice_matrix.keys()))
+        return get_next_outcome(self)
 
         
 
