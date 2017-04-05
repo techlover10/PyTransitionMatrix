@@ -7,7 +7,7 @@
 
 import sys, os, json
 
-class MarkovTransitionMatrix:
+class TransitionMatrix:
     
     def __init__(self, init_path=None):
         self.matrix = {}
@@ -25,7 +25,6 @@ class MarkovTransitionMatrix:
             if next_state in self.matrix[prev_state]:
                 self.matrix[prev_state][next_state]+=1
             else:
-                self.matrix[prev_state] = {}
                 self.matrix[prev_state][next_state]=1
 
         else:
@@ -45,12 +44,17 @@ class MarkovTransitionMatrix:
 
         self.norm_matrix = new_matrix
         
-    def save(self, name='data'):
+    # Save the data into a file
+    def save(self, filepath='data'):
         self.normalize()
         frequency_data = json.dumps(self.matrix)
         normalized_data = json.dumps(self.norm_matrix)
-        open(name + '.out', 'w').write(frequency_data)
-        open(name + '_norm.out', 'w').write(normalized_data)
+        open(filepath + '.out', 'w').write(frequency_data)
+        open(filepath + '_norm.out', 'w').write(normalized_data)
+
+    # Load multiple data files into one combined transition matrix
+    def load_data(self, file):
+        pass
         
 
         
