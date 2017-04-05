@@ -9,14 +9,15 @@ import sys, os, json
 
 class TransitionMatrix:
     
-    def __init__(self, init_path=None):
+    def __init__(self, init_name=None):
         self.matrix = {}
         self.norm_matrix = None
+        self.fname = init_name if init_name else 'data'
 
         # If there is an initial starting matrix, 
         # initialize probabilities based on this
-        if init_path and (os.path.isfile(init_path)):
-            prob_raw = open(init_path)
+        if init_name and (os.path.isfile(init_name + '.mkv')):
+            prob_raw = open(init_name + '.mkv')
             prob_raw_data = prob_raw.read()
             self.matrix = json.loads(prob_raw_data)
             self.normalize()
@@ -46,12 +47,17 @@ class TransitionMatrix:
         self.norm_matrix = new_matrix
         
     # Save the data into a file
-    def save(self, filepath='data'):
+    # Returns either the file name for the frequencies,
+    # or the file name for the normalized probabilities
+    def save(self, norm=False):
         self.normalize()
         frequency_data = json.dumps(self.matrix)
         normalized_data = json.dumps(self.norm_matrix)
-        open(filepath + '.mkv', 'w').write(frequency_data)
-        open(filepath + '_norm.mkv', 'w').write(normalized_data)
+        open(self.fname + '.mkv', 'w').write(frequency_data)
+        open(self.fname + '_norm.mkv', 'w').write(normalized_data)
+        if not norm:
+            return self.fname + '.mkv'
+        return self.fname + '_norm.mkv'
 
     # Add data from another existing matrix into the current object.
     # Combines and sums the new data with the data in the structure
