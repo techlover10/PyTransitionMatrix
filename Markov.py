@@ -10,7 +10,7 @@ import copy
 
 class TransitionMatrix:
     
-    def __init__(self):
+    def __init__(self, init_name=None):
         self.matrix = {}
         self.norm_matrix = None
         self.fname = init_name if init_name else 'data'
