@@ -10,22 +10,12 @@ import copy
 
 class TransitionMatrix:
     
-    def __init__(self, init_name=None):
+    def __init__(self):
         self.matrix = {}
         self.norm_matrix = None
         self.fname = init_name if init_name else 'data'
         self.curr_state = None
         self.choice_matrix = None
-
-        # If there is an initial starting matrix, 
-        # initialize probabilities based on this
-        # DEPRECATED - this function should not be necessary
-        # Use "load_data" to load from existing markov matrix
-        # if init_name and (os.path.isfile(init_name + '.mkv')):
-        #     prob_raw = open(init_name + '.mkv')
-        #     prob_raw_data = prob_raw.read()
-        #     self.matrix = json.loads(prob_raw_data)
-        #     self.normalize()
 
     def add_transition(self, prev_state, next_state):
         if prev_state in self.matrix.keys():
