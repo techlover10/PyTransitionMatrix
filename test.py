@@ -18,8 +18,8 @@ a.matrix
 b.matrix
 a.save('dataA')
 b.save('dataB')
-c = Markov.TransitionMatrix('dataA.mkv')
-c.load_data('dataB.mkv')
+c = Markov.TransitionMatrix('dataA.json')
+c.load_data('dataB.json')
 print(c.matrix)
 print(c.norm_matrix)
 c.initialize_chain()
