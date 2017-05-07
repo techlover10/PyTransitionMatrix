@@ -20,7 +20,7 @@ The matrix can accept any form of transition where the state is either a string 
 To normalize the data into a proper stochastic matrix, call matrix.normalize().  This function is called by default when saving the data to a file, but this call can be useful if one wishes to view normalized data at any point.
 
 ### Loading and Saving
-To save data, call `matrix.save()`.  This will save the matrix of transition counts as `filename.mkv` in the current working directory, and the normalized stochastic matrix as `filename_norm.mkv`.  By default, the function call will also return the transition count matrix; calling `matrix.save(norm=True)` will return the normalized matrix.
+To save data, call `matrix.save()`.  This will save the matrix of transition counts as `filename.json` in the current working directory, and the normalized stochastic matrix as `filename_norm.json`.  By default, the function call will also return the transition count matrix; calling `matrix.save(norm=True)` will return the normalized matrix.
 
 To load data, call `matrix.load(filename)`.  This will load an existing file containing transition counts into the object, and regenerate the normalized matrix.  Be warned, this is *additive*: at any point, loading data into the matrix will combine with the existing data to produce a new matrix.
 
