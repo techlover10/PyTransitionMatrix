@@ -48,11 +48,11 @@ class TransitionMatrix:
         self.normalize()
         frequency_data = json.dumps(self.matrix)
         normalized_data = json.dumps(self.norm_matrix)
-        open(self.fname + '.mkv', 'w').write(frequency_data)
-        open(self.fname + '_norm.mkv', 'w').write(normalized_data)
+        open(self.fname + '.json', 'w').write(frequency_data)
+        open(self.fname + '_norm.json', 'w').write(normalized_data)
         if not norm:
-            return self.fname + '.mkv'
-        return self.fname + '_norm.mkv'
+            return self.fname + '.json'
+        return self.fname + '_norm.json'
 
     # Add data from another existing matrix into the current object.
     # Combines and sums the new data with the data in the structure
