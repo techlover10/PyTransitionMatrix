@@ -91,10 +91,6 @@ class TransitionMatrix:
                 self.curr_state = key
                 return key
 
-    def reset_transition(self):
-        self.curr_state = random.choice(list(self.choice_matrix.keys()))
-
-
         
 
         
