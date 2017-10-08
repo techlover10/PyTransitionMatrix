@@ -90,9 +90,10 @@ class TransitionMatrix:
             if self.choice_matrix[self.curr_state][key] >= rand:
                 self.curr_state = key
                 return key
-        
+
+    def reset_transition(self):
         self.curr_state = random.choice(list(self.choice_matrix.keys()))
-        return get_next_outcome(self)
+
 
         
 
